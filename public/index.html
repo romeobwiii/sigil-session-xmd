@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mulaa Company | WhatsApp Session Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00d9ff;
+            --secondary: #0066ff;
+            --accent: #ff0080;
+            --dark: #0a0e27;
+            --darker: #060920;
+            --light: #f8f9fa;
+            --gray: #a8b2d1;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --glow: 0 0 20px rgba(0, 217, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+            color: var(--light);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: rgba(6, 9, 32, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .menu-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .menu-link:hover {
+            color: var(--primary);
+        }
+
+        .menu-link:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 12rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            font-weight: 800;
+            text-shadow: 0 0 40px rgba(0, 217, 255, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .feature-title {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: var(--gray);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .stats {
+            padding: 4rem 2rem;
+            background: rgba(0, 217, 255, 0.03);
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .stat-item p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        footer {
+            background: var(--darker);
+            padding: 4rem 2rem 2rem;
+            margin-top: auto;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .footer-logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .footer-logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-description {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 217, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .footer-column h3 {
+            color: var(--light);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+        }
+
+        .copyright a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--darker);
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                padding: 2rem;
+                gap: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .menu.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <img src="https://avatars.githubusercontent.com/u/173539960?v=4" alt="Mulaa Company" class="logo-img">
+                <span class="logo-text">Mulaa Company</span>
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="menu" id="menu">
+                <a href="https://github.com/romeobwii/MULAA-SIGIL-XMD" class="menu-link" target="_blank">
+                    <i class="fab fa-github"></i> Source Code
+                </a>
+                <a href="./pair" class="menu-link">
+                    <i class="fas fa-link"></i> Pair Code
+                </a>
+                <a href="./qr" class="menu-link">
+                    <i class="fas fa-qrcode"></i> QR Code
+                </a>
+                <a href="https://t.me/mulaacompany" class="menu-link" target="_blank">
+                    <i class="fab fa-telegram"></i> Support
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">MULAA MULAA-SIGIL-XMD WhatsApp Bot</h1>
+            <p class="hero-subtitle">
+             Generate your session instantly and step into a seamless, cinematic WhatsApp experience. Precision, speed, and resonance — automation elevated into mythic legacy.
+            </p>
+            <div class="hero-buttons">
+                <a href="./pair" class="btn btn-primary">
+                    <i class="fas fa-link"></i> Get Pair Code
+                </a>
+                <a href="./qr" class="btn btn-secondary">
+                    <i class="fas fa-qrcode"></i> Scan QR Code
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>3+</h3>
+                <p>Active Bots</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Open Source</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Support</p>
+            </div>
+            <div class="stat-item">
+                <h3>Fast</h3>
+                <p>Session Gen</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">Why Choose Mulaa Company?</h2>
+        <div class="features-grid">
+            <div class="feature-card" onclick="window.location.href='./pair'">
+                <div class="feature-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <h3 class="feature-title">Pair Code Login</h3>
+                <p class="feature-description">
+                    Connect securely using a pairing code - no need for QR scanning. Simple, fast, and works on any device.
+                </p>
+            </div>
+            
+            <div class="feature-card" onclick="window.location.href='./qr'">
+                <div class="feature-icon">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <h3 class="feature-title">QR Code Login</h3>
+                <p class="feature-description">
+                    Traditional QR scanning method for instant connection. Quick setup in seconds with your phone camera.
+                </p>
+            </div>
+            
+            <div class="feature-card" onclick="window.open('https://github.com/romeobwii/MULAA-SIGIL-XMD', '_blank')">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="feature-title">Open Source</h3>
+                <p class="feature-description">
+                    Fully transparent codebase. Customize, extend, and deploy your own version of the bot.
+                </p>
+            </div>
+            
+            <div class="feature-card" onclick="window.open('https://t.me/mulax', '_blank')">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="feature-title">24/7 Support</h3>
+                <p class="feature-description">
+                    Get help anytime via Telegram. Team Mulaa  is always ready to assist you.
+                </p>
+            </div>
+            
+            <div class="feature-card" onclick="window.open('https://whatsapp.com/channel/0029VbBdM812kNFhR12QdI2F', '_blank')">
+                <div class="feature-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <h3 class="feature-title">Updates Channel</h3>
+                <p class="feature-description">
+                    Stay updated with latest features, bug fixes, and announcements on our WhatsApp channel.
+                </p>
+            </div>
+
+            <div class="feature-card" onclick="window.open('https://whatsapp.com/channel/0029VbBdM812kNFhR12QdI2F', '_blank')">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="feature-title">Community</h3>
+                <p class="feature-description">
+                    Join our WhatsApp group to connect with other users and share experiences.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="footer-logo">
+                    <img src="https://avatars.githubusercontent.com/u/173539960?v=4" alt="MULAA-SIGIL-XMD" class="footer-logo-img">
+                    <span class="footer-logo-text">Mulaa Company</span>
+                </a>
+                <p class="footer-description">
+                 MULAA SIGIL XMD — Advanced WhatsApp Automation, Mythic Authority.  
+                 Instantly generate your session and command WhatsApp with seamless precision. Not a choice, not an option — a legacy. Automation reborn into cinematic flowBuilding powerful WhatsApp automation tools. choose your bot, generate your session, and start automating.
+                </p>
+                <div class="social-links">
+                    <a href="https://github.com/romeobwii/MULAA-SIGIL-XMD" class="social-link" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://t.me/mulax" class="social-link" target="_blank">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="https://whatsapp.com/channel/0029VbBdM812kNFhR12QdI2F" class="social-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="./pair"><i class="fas fa-chevron-right"></i> Pair Code</a></li>
+                    <li><a href="./qr"><i class="fas fa-chevron-right"></i> QR Code</a></li>
+                    <li><a href="https://github.com/romeobwii/MULAA-SIGIL-XMD target="_blank"><i class="fas fa-chevron-right"></i> MULAA-SIGIL-XMD Bot</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="https://t.me/Peaseernest" target="_blank"><i class="fas fa-chevron-right"></i> Telegram</a></li>
+                    <li><a href="https://whatsapp.com/channel/0029VbBdM812kNFhR12QdI2F" target="_blank"><i class="fas fa-chevron-right"></i> WhatsApp Channel</a></li>
+                    <li><a href="https://chat.whatsapp.com/KDvTnH0DedL4InPJnXZ4Fk" target="_blank"><i class="fas fa-chevron-right"></i> Community Group</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><a href="tel:+26775462914"><i class="fas fa-phone"></i> +267 75 462 914</a></li>
+                    <li><a href="https://t.me/mulax" target="_blank"><i class="fas fa-paper-plane"></i> @Mulax Prime</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2026 <a href="https://t.me/Peaseernest" target="_blank">Mulaa Company</a> | Built by Mulaa Company
+        </div>
+    </footer>
+
+    <script>
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 20 : 40;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = '-10px';
+                
+                const duration = Math.random() * 10 + 15;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+
+        const menuToggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+            menuToggle.innerHTML = menu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    menu.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
